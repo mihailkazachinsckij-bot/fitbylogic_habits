@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#ffffff"/>
+  <!-- ring track -->
+  <circle cx="256" cy="178" r="90" fill="none" stroke="#ebebeb" stroke-width="15"/>
+  <!-- ring fill 3/4 -->
+  <circle cx="256" cy="178" r="90" fill="none" stroke="#1d1d1f" stroke-width="15"
+    stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="141"
+    transform="rotate(-90 256 178)"/>
+  <!-- checkmark -->
+  <path d="M218 178 l27 27 53-53" fill="none" stroke="#1d1d1f" stroke-width="17"
+    stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- FITBYLOGIC -->
+  <text x="256" y="336"
+    font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+    font-size="50" font-weight="800" fill="#1d1d1f"
+    text-anchor="middle" letter-spacing="2">FITBYLOGIC</text>
+  <!-- HABITS -->
+  <text x="256" y="384"
+    font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+    font-size="26" font-weight="400" fill="#8e8e93"
+    text-anchor="middle" letter-spacing="8">HABITS</text>
+</svg>
