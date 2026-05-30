@@ -39,7 +39,7 @@
     #onboarding { position:fixed; inset:0; z-index:500; background:var(--bg); display:flex; flex-direction:column; align-items:center; }
     .ob-screen { width:100%; max-width:430px; height:100%; display:none; flex-direction:column; }
     .ob-screen.active { display:flex; }
-    .ob-top { padding:calc(var(--st)+16px) 28px 12px; flex-shrink:0; }
+    .ob-top { padding:calc(var(--st)+16px) 28px 12px; flex-shrink:0; text-align:center; }
     .ob-brand { font-size:13px; font-weight:700; letter-spacing:4px; color:var(--ts); margin-bottom:14px; }
     .ob-title { font-size:26px; font-weight:700; letter-spacing:-.4px; margin-bottom:4px; }
     .ob-sub   { font-size:15px; color:var(--ts); }
@@ -191,11 +191,10 @@
     }
     .hcard-del-bg {
       position:absolute; right:0; top:0; bottom:0; width:88px;
-      background:#ff3b30; display:flex; flex-direction:column;
+      background:transparent; display:flex; flex-direction:column;
       align-items:center; justify-content:center; gap:4px;
-      color:#fff; font-size:12px; font-weight:600; cursor:pointer; user-select:none;
+      color:var(--ts); font-size:12px; font-weight:600; cursor:pointer; user-select:none;
     }
-    [data-theme="dark"] .hcard-del-bg { background:#ff453a; }
 
     .hcard {
       position:relative; z-index:1;
@@ -444,6 +443,12 @@
       font-size:16px; font-family:inherit; font-weight:500; color:var(--bg); cursor:pointer;
     }
 
+    /* Habits bottom actions */
+    .habits-actions {
+      flex-shrink:0; display:flex; justify-content:center; align-items:center;
+      gap:20px; padding:8px 0 6px;
+    }
+
     /* Empty state */
     .empty { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 32px; text-align:center; gap:6px; }
     .empty-t { font-size:17px; font-weight:600; }
@@ -487,16 +492,8 @@
 
   <!-- ПРИВЫЧКИ -->
   <div class="screen on" id="s-habits">
-    <div class="app-hdr">
-      <button class="icon-btn" id="theme-btn-habits">
-        <svg id="theme-icon-habits" width="16" height="16" viewBox="0 0 24 24" fill="none"></svg>
-      </button>
+    <div class="app-hdr" style="justify-content:center">
       <span class="app-name">FITBYLOGIC</span>
-      <button class="icon-btn" id="edit-btn">
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-          <path d="M7.5 1v13M1 7.5h13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
-      </button>
     </div>
     <div class="strip-wrap">
       <div class="date-strip" id="date-strip"></div>
@@ -507,6 +504,16 @@
     </div>
     <div class="scroll-area">
       <div class="hcards" id="hcards"></div>
+    </div>
+    <div class="habits-actions">
+      <button class="icon-btn" id="theme-btn-habits">
+        <svg id="theme-icon-habits" width="16" height="16" viewBox="0 0 24 24" fill="none"></svg>
+      </button>
+      <button class="icon-btn" id="edit-btn">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <path d="M7.5 1v13M1 7.5h13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -1035,8 +1042,8 @@ function renderCards() {
     const delBg = document.createElement('div');
     delBg.className = 'hcard-del-bg';
     delBg.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg><span>Удалить</span>`;
+      <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
 
     const card = document.createElement('div');
     card.className = 'hcard'+(isDone?' done':'');
