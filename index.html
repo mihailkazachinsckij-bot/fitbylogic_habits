@@ -1928,6 +1928,106 @@
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
       }
+
+      /* AI action proposal card */
+      .chat-action-card {
+        margin: -4px 16px 4px 52px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 122, 255, 0.07) 0%,
+          rgba(88, 86, 214, 0.05) 100%
+        );
+        border: 0.5px solid rgba(0, 122, 255, 0.22);
+        border-radius: 16px;
+        padding: 13px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        animation: fadeUp 0.22s ease both;
+      }
+      [data-theme="dark"] .chat-action-card {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 122, 255, 0.12) 0%,
+          rgba(88, 86, 214, 0.09) 100%
+        );
+        border-color: rgba(0, 122, 255, 0.3);
+      }
+      .chat-action-header {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+      .chat-action-emoji {
+        font-size: 26px;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .chat-action-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .chat-action-label {
+        font-size: 10.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #007aff;
+      }
+      .chat-action-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--tp);
+      }
+      .chat-action-btns {
+        display: flex;
+        gap: 8px;
+      }
+      .chat-action-accept {
+        flex: 1;
+        padding: 9px 10px;
+        border-radius: 11px;
+        border: none;
+        background: #007aff;
+        color: #fff;
+        font-size: 13.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          transform 0.12s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .chat-action-accept:active {
+        transform: scale(0.97);
+        background: #0060df;
+      }
+      .chat-action-decline {
+        flex: 1;
+        padding: 9px 10px;
+        border-radius: 11px;
+        border: 1px solid var(--divider);
+        background: transparent;
+        color: var(--tt);
+        font-size: 13.5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          opacity 0.15s,
+          transform 0.12s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .chat-action-decline:active {
+        transform: scale(0.97);
+        opacity: 0.6;
+      }
+      .chat-action-done {
+        text-align: center;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 2px 0;
+      }
     </style>
   </head>
   <body>
@@ -3431,6 +3531,10 @@
               `${h.icon} ${h.name} (выполнено ${totalComps(h)} раз из ${h.duration || 21})`,
           )
           .join("; ");
+        const disabled = S.habits
+          .filter((h) => !h.enabled)
+          .map((h) => `${h.icon} ${h.name}`)
+          .join("; ");
         const xp = calcTotalXP();
         const ri = getRankIdx(xp);
         const streak = calcStreak();
@@ -3446,7 +3550,8 @@
 • Система, а не цели — фокус на процессе
 
 Данные пользователя:
-Привычки: ${habits || "пока нет"}
+Активные привычки: ${habits || "пока нет"}
+Отключённые привычки: ${disabled || "нет"}
 XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
 Серия дней: ${streak}
 
@@ -3454,17 +3559,40 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
 СОВЕТЫ:
 • [текст]
 • [текст]
-• [текст]`;
+• [текст]
+
+Если считаешь нужным предложить конкретное изменение в привычках пользователя, добавь ПОСЛЕ блока СОВЕТЫ одну строку в точном формате:
+ДЕЙСТВИЕ: ADD | [один эмодзи] | [Название новой привычки]
+или
+ДЕЙСТВИЕ: ENABLE | [Точное название отключённой привычки из списка выше]
+Добавляй ДЕЙСТВИЕ только когда уверен в пользе. Максимум одно ДЕЙСТВИЕ за ответ. Не дублируй уже активные привычки.`;
       }
 
       function parseSuggestions(text) {
+        let action = null;
+        const actMatch = text.match(
+          /ДЕЙСТВИЕ:\s*(ADD|ENABLE)\s*\|\s*(.+?)(?:\s*\|\s*(.+?))?\s*$/im,
+        );
+        if (actMatch) {
+          const type = actMatch[1].toUpperCase();
+          if (type === "ADD" && actMatch[3]) {
+            action = {
+              type: "ADD",
+              icon: actMatch[2].trim(),
+              name: actMatch[3].trim(),
+            };
+          } else if (type === "ENABLE" && actMatch[2]) {
+            action = { type: "ENABLE", name: actMatch[2].trim() };
+          }
+          text = text.slice(0, text.search(/ДЕЙСТВИЕ:/im)).trim();
+        }
         const match = text.match(/СОВЕТЫ:\s*([\s\S]*?)$/i);
-        if (!match) return { clean: text, tips: [] };
+        if (!match) return { clean: text, tips: [], action };
         const clean = text.slice(0, text.indexOf(match[0])).trim();
         const tips = [...match[1].matchAll(/•\s*(.+)/g)].map((m) =>
           m[1].trim(),
         );
-        return { clean, tips };
+        return { clean, tips, action };
       }
 
       function appendBubble(role, text) {
@@ -3498,11 +3626,86 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
         const chips = document.getElementById("chat-chips");
         if (!chips) return;
         chips.innerHTML = tips
-          .map(
-            (t) =>
-              `<div class="chip" onclick="sendChat(${JSON.stringify(t)})">${t}</div>`,
-          )
+          .map((t) => `<div class="chip" data-text="${esc(t)}">${esc(t)}</div>`)
           .join("");
+        chips.querySelectorAll(".chip").forEach((chip) => {
+          chip.addEventListener("click", () => sendChat(chip.dataset.text));
+        });
+      }
+
+      function appendActionCard(action) {
+        const msgs = document.getElementById("chat-msgs");
+        if (!msgs) return;
+
+        let icon = action.icon || "⭐";
+        let name = action.name || "";
+        let targetHabit = null;
+
+        if (action.type === "ENABLE") {
+          targetHabit = S.habits.find(
+            (h) =>
+              !h.enabled && h.name.toLowerCase().includes(name.toLowerCase()),
+          );
+          if (!targetHabit) return;
+          icon = targetHabit.icon;
+          name = targetHabit.name;
+        }
+
+        const label =
+          action.type === "ADD"
+            ? "Тренер предлагает добавить"
+            : "Тренер предлагает включить";
+        const btnText =
+          action.type === "ADD" ? "Добавить привычку" : "Включить";
+
+        const card = document.createElement("div");
+        card.className = "chat-action-card";
+        card.innerHTML = `
+          <div class="chat-action-header">
+            <div class="chat-action-emoji">${icon}</div>
+            <div class="chat-action-meta">
+              <div class="chat-action-label">${label}</div>
+              <div class="chat-action-name">${esc(name)}</div>
+            </div>
+          </div>
+          <div class="chat-action-btns">
+            <button class="chat-action-accept">${btnText}</button>
+            <button class="chat-action-decline">Не сейчас</button>
+          </div>`;
+
+        card
+          .querySelector(".chat-action-accept")
+          .addEventListener("click", () => {
+            if (action.type === "ADD") {
+              S.habits.push({
+                id: uid(),
+                name,
+                icon,
+                enabled: true,
+                duration: 21,
+                startDate: todayKey(),
+                schedule: { type: "daily" },
+              });
+            } else if (targetHabit) {
+              targetHabit.enabled = true;
+            }
+            saveS();
+            renderCards();
+            renderStrip(false);
+            refreshProfileDisplay();
+            card.querySelector(".chat-action-btns").innerHTML =
+              `<div class="chat-action-done" style="color:#34c759">✓ Привычка добавлена!</div>`;
+          });
+
+        card
+          .querySelector(".chat-action-decline")
+          .addEventListener("click", () => {
+            card.querySelector(".chat-action-btns").innerHTML =
+              `<div class="chat-action-done" style="color:var(--tt)">Хорошо, в другой раз</div>`;
+          });
+
+        msgs.appendChild(card);
+        msgs.scrollTop = msgs.scrollHeight;
       }
 
       async function sendChat(userText) {
@@ -3549,10 +3752,11 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
 
           const data = await resp.json();
           const raw = data?.content?.[0]?.text || "";
-          const { clean, tips } = parseSuggestions(raw);
+          const { clean, tips, action } = parseSuggestions(raw);
 
           chatHistory.push({ role: "assistant", content: raw });
           appendBubble("ai", clean);
+          if (action) appendActionCard(action);
 
           const defaultTips = [
             "Как не сорваться на привычке?",
