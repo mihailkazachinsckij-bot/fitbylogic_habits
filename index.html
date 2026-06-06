@@ -3413,7 +3413,8 @@
       // AI CHAT
       // ════════════════════════════════════════════════════════════
       // ── Вставь сюда URL своего Cloudflare Worker ──────────────────
-      const WORKER_URL = "https://fitbylogic-ai.mihail-kazachinsckij.workers.dev/";
+      const WORKER_URL =
+        "https://fitbylogic-ai.mihail-kazachinsckij.workers.dev";
       // ──────────────────────────────────────────────────────────────
 
       const AI_MODEL = "claude-haiku-4-5-20251001";
@@ -3557,7 +3558,12 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
           setChips(tips.length ? tips : defaultTips);
         } catch (e) {
           if (typing) typing.remove();
-          appendBubble("ai", "⚠️ Нет соединения. Проверь интернет.");
+          const isCors = e instanceof TypeError && e.message.includes("fetch");
+          const msg = isCors
+            ? "⚠️ Worker недоступен или не настроен CORS.\nПроверь, что Worker задеплоен и URL правильный."
+            : `⚠️ ${e.message || "Нет соединения"}`;
+          appendBubble("ai", msg);
+          console.error("[AI chat error]", e);
         }
 
         chatBusy = false;
