@@ -2028,6 +2028,172 @@
         font-weight: 600;
         padding: 2px 0;
       }
+
+      /* ─── STACK GROUPS (habit stacking) ─── */
+      .stack-group {
+        background: var(--glass);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-radius: 20px;
+        border: 0.5px solid rgba(0, 122, 255, 0.18);
+        padding: 12px 10px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        animation: fadeUp 0.3s ease both;
+        box-shadow:
+          0 2px 18px rgba(0, 122, 255, 0.07),
+          0 1px 4px rgba(0, 0, 0, 0.04);
+      }
+      [data-theme="dark"] .stack-group {
+        border-color: rgba(0, 122, 255, 0.28);
+      }
+      .stack-hdr {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 6px 8px;
+      }
+      .stack-hdr-title {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 10.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: #007aff;
+      }
+      .stack-remove-btn {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0, 0, 0, 0.06);
+        color: var(--tt);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-tap-highlight-color: transparent;
+        transition: background 0.15s;
+        flex-shrink: 0;
+      }
+      [data-theme="dark"] .stack-remove-btn {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .stack-remove-btn:active {
+        background: rgba(255, 45, 85, 0.15);
+      }
+      /* habits inside stack reuse .hcard — just override radius + animation */
+      .stack-group .hcard-wrap {
+        animation: none !important;
+      }
+      .stack-group .hcard {
+        border-radius: 13px;
+      }
+      .stack-connector {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 6px 5px 20px;
+      }
+      .stack-conn-line {
+        width: 1.5px;
+        height: 18px;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 122, 255, 0.45),
+          rgba(0, 122, 255, 0.1)
+        );
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+      .stack-conn-label {
+        font-size: 11px;
+        color: #007aff;
+        font-weight: 500;
+        opacity: 0.75;
+      }
+
+      /* ─── STACK BUILDER SHEET ─── */
+      .stack-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background 0.15s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .stack-row:active {
+        background: rgba(0, 0, 0, 0.04);
+      }
+      .stack-row.sel {
+        background: rgba(0, 122, 255, 0.06);
+      }
+      [data-theme="dark"] .stack-row.sel {
+        background: rgba(0, 122, 255, 0.1);
+      }
+      .stack-row-num {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1.5px solid var(--divider);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--tt);
+        transition:
+          background 0.18s,
+          border-color 0.18s,
+          color 0.18s;
+        flex-shrink: 0;
+      }
+      .stack-row-num.active {
+        border-color: #007aff;
+        background: #007aff;
+        color: #fff;
+      }
+      .stack-row-icon {
+        font-size: 22px;
+        flex-shrink: 0;
+      }
+      .stack-row-name {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--tp);
+        flex: 1;
+      }
+      .stack-hint {
+        font-size: 13px;
+        color: var(--tt);
+        text-align: center;
+        padding: 6px 16px 2px;
+      }
+
+      /* ─── CHAT STACK PREVIEW (action card) ─── */
+      .chat-stack-preview {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 2px 0;
+      }
+      .chat-stack-habit {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--tp);
+        padding: 2px 0;
+      }
+      .chat-stack-arrow {
+        font-size: 11px;
+        color: #007aff;
+        font-weight: 500;
+        padding: 1px 0 1px 4px;
+      }
     </style>
   </head>
   <body>
@@ -2087,6 +2253,24 @@
               viewBox="0 0 24 24"
               fill="none"
             ></svg>
+          </button>
+          <button class="icon-btn" id="stack-btn" title="Связать привычки">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </button>
           <button class="icon-btn" id="edit-btn">
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
@@ -2376,6 +2560,21 @@
       <div class="dp-btns">
         <button class="dp-cancel" id="dp-cancel">Отмена</button>
         <button class="dp-confirm" id="dp-confirm">Добавить</button>
+      </div>
+    </div>
+
+    <!-- Stack builder sheet -->
+    <div class="ovl" id="stack-ovl"></div>
+    <div class="bsheet" id="stack-sheet">
+      <div class="sh-handle"></div>
+      <div class="sh-title">Связать привычки</div>
+      <p class="stack-hint">Выбери привычки в нужном порядке</p>
+      <div class="sh-body" id="stack-body"></div>
+      <div class="dp-btns">
+        <button class="dp-cancel" id="stack-cancel-btn">Отмена</button>
+        <button class="dp-confirm" id="stack-confirm-btn" disabled>
+          Связать
+        </button>
       </div>
     </div>
 
@@ -2672,9 +2871,16 @@
             profile: JSON.parse(localStorage.getItem("hb2_profile")) || {},
             onboarded:
               JSON.parse(localStorage.getItem("hb2_onboarded")) || false,
+            stacks: JSON.parse(localStorage.getItem("hb2_stacks")) || [],
           };
         } catch {
-          return { habits: [], completions: {}, profile: {}, onboarded: false };
+          return {
+            habits: [],
+            completions: {},
+            profile: {},
+            onboarded: false,
+            stacks: [],
+          };
         }
       }
       function saveS() {
@@ -2682,6 +2888,7 @@
         localStorage.setItem("hb2_comps", JSON.stringify(S.completions));
         localStorage.setItem("hb2_profile", JSON.stringify(S.profile));
         localStorage.setItem("hb2_onboarded", JSON.stringify(S.onboarded));
+        localStorage.setItem("hb2_stacks", JSON.stringify(S.stacks || []));
       }
       const S = loadS();
 
@@ -3104,6 +3311,18 @@
       // ════════════════════════════════════════════════════════════
       // HABIT CARDS
       // ════════════════════════════════════════════════════════════
+      function buildCardSegs(h) {
+        const comp = totalComps(h);
+        const dur = h.duration || 21;
+        const filled = Math.min(comp, dur);
+        const segs = Array.from(
+          { length: Math.min(dur, 90) },
+          (_, j) =>
+            `<div class="seg${j < Math.round((filled / dur) * Math.min(dur, 90)) ? " fill" : ""}"></div>`,
+        ).join("");
+        return { comp, dur, segs };
+      }
+
       function renderCards() {
         const container = document.getElementById("hcards");
         container.innerHTML = "";
@@ -3118,68 +3337,150 @@
         }
 
         const selDateObj = new Date(key + "T00:00:00");
-        active.forEach((h, i) => {
-          const scheduled = isScheduledDay(h, selDateObj);
-          const isDone = done.includes(h.id);
-          const comp = totalComps(h);
-          const dur = h.duration || 21;
-          const filled = Math.min(comp, dur);
-          const segs = Array.from(
-            { length: Math.min(dur, 90) },
-            (_, j) =>
-              `<div class="seg${j < Math.round((filled / dur) * Math.min(dur, 90)) ? " fill" : ""}"></div>`,
-          ).join("");
-          const schedBadge = scheduleLabel(h)
-            ? `<div class="hc-sched">${scheduleLabel(h)}</div>`
-            : "";
 
-          const wrap = document.createElement("div");
-          wrap.className = "hcard-wrap";
-          wrap.style.animationDelay = i * 30 + "ms";
+        // Build stack lookup
+        const stackOf = new Map();
+        (S.stacks || []).forEach((st) =>
+          st.habitIds.forEach((id) => stackOf.set(id, st)),
+        );
+        const rendered = new Set();
 
-          const delBg = document.createElement("div");
-          delBg.className = "hcard-del-bg";
-          delBg.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`;
+        let animIdx = 0;
 
-          const card = document.createElement("div");
-          card.className =
-            "hcard" +
-            (isDone ? " done" : "") +
-            (scheduled ? "" : " unscheduled");
-          card.innerHTML = `
-      <div class="hc-icon">${h.icon || "●"}</div>
-      <div class="hc-body">
-        <div class="hc-name">${esc(h.name)}</div>
-        <div class="seg-bar">${segs}</div>
-        <div class="hc-prog">${comp} / ${dur} выполнений</div>
-        ${schedBadge}
-      </div>
-      <div class="check-circle">
-        <svg width="11" height="8" viewBox="0 0 11 8" fill="none">
-          <path d="M1 4l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>`;
+        active.forEach((h) => {
+          if (rendered.has(h.id)) return;
 
-          wrap.appendChild(delBg);
-          wrap.appendChild(card);
-          container.appendChild(wrap);
+          const st = stackOf.get(h.id);
+          if (st) {
+            // Get ordered active habits in this stack
+            const stHabits = st.habitIds
+              .map((id) => active.find((a) => a.id === id))
+              .filter(Boolean);
+            if (!stHabits.length || stHabits[0].id !== h.id) return;
+            stHabits.forEach((sh) => rendered.add(sh.id));
 
-          const hId = h.id;
-          makeSwipeable(wrap, card, {
-            toggle() {
-              toggleCard(hId);
-            },
-            remove() {
-              const idx = S.habits.findIndex((x) => x.id === hId);
-              if (idx !== -1) S.habits.splice(idx, 1);
-              saveS();
-              renderCards();
-              renderStrip(false);
-              refreshProfileDisplay();
-            },
-          });
+            // ── Stack group container ──
+            const group = document.createElement("div");
+            group.className = "stack-group";
+            group.style.animationDelay = animIdx * 30 + "ms";
+            animIdx++;
+
+            // Stack header
+            const hdr = document.createElement("div");
+            hdr.className = "stack-hdr";
+            hdr.innerHTML = `<div class="stack-hdr-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Стек</div><button class="stack-remove-btn" title="Разъединить"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>`;
+            hdr
+              .querySelector(".stack-remove-btn")
+              .addEventListener("click", () => {
+                S.stacks = (S.stacks || []).filter((s) => s.id !== st.id);
+                saveS();
+                renderCards();
+              });
+            group.appendChild(hdr);
+
+            stHabits.forEach((sh, si) => {
+              if (si > 0) {
+                const conn = document.createElement("div");
+                conn.className = "stack-connector";
+                conn.innerHTML = `<div class="stack-conn-line"></div><span class="stack-conn-label">затем</span>`;
+                group.appendChild(conn);
+              }
+
+              const isDoneH = done.includes(sh.id);
+              const scheduledH = isScheduledDay(sh, selDateObj);
+              const { comp, dur, segs } = buildCardSegs(sh);
+
+              const wrap = document.createElement("div");
+              wrap.className = "hcard-wrap";
+
+              const delBg = document.createElement("div");
+              delBg.className = "hcard-del-bg";
+              delBg.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+              const card = document.createElement("div");
+              card.className =
+                "hcard" +
+                (isDoneH ? " done" : "") +
+                (scheduledH ? "" : " unscheduled");
+              card.innerHTML = `<div class="hc-icon">${sh.icon || "●"}</div><div class="hc-body"><div class="hc-name">${esc(sh.name)}</div><div class="seg-bar">${segs}</div><div class="hc-prog">${comp} / ${dur} выполнений</div></div><div class="check-circle"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+
+              wrap.appendChild(delBg);
+              wrap.appendChild(card);
+              group.appendChild(wrap);
+
+              const shId = sh.id;
+              makeSwipeable(wrap, card, {
+                toggle() {
+                  toggleCard(shId);
+                },
+                remove() {
+                  const idx = S.habits.findIndex((x) => x.id === shId);
+                  if (idx !== -1) S.habits.splice(idx, 1);
+                  S.stacks = (S.stacks || [])
+                    .map((s) => ({
+                      ...s,
+                      habitIds: s.habitIds.filter((id) => id !== shId),
+                    }))
+                    .filter((s) => s.habitIds.length >= 2);
+                  saveS();
+                  renderCards();
+                  renderStrip(false);
+                  refreshProfileDisplay();
+                },
+              });
+            });
+
+            container.appendChild(group);
+          } else {
+            // ── Individual card (original logic) ──
+            const scheduled = isScheduledDay(h, selDateObj);
+            const isDone = done.includes(h.id);
+            const { comp, dur, segs } = buildCardSegs(h);
+            const schedBadge = scheduleLabel(h)
+              ? `<div class="hc-sched">${scheduleLabel(h)}</div>`
+              : "";
+
+            const wrap = document.createElement("div");
+            wrap.className = "hcard-wrap";
+            wrap.style.animationDelay = animIdx * 30 + "ms";
+            animIdx++;
+
+            const delBg = document.createElement("div");
+            delBg.className = "hcard-del-bg";
+            delBg.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+            const card = document.createElement("div");
+            card.className =
+              "hcard" +
+              (isDone ? " done" : "") +
+              (scheduled ? "" : " unscheduled");
+            card.innerHTML = `<div class="hc-icon">${h.icon || "●"}</div><div class="hc-body"><div class="hc-name">${esc(h.name)}</div><div class="seg-bar">${segs}</div><div class="hc-prog">${comp} / ${dur} выполнений</div>${schedBadge}</div><div class="check-circle"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+
+            wrap.appendChild(delBg);
+            wrap.appendChild(card);
+            container.appendChild(wrap);
+
+            const hId = h.id;
+            makeSwipeable(wrap, card, {
+              toggle() {
+                toggleCard(hId);
+              },
+              remove() {
+                const idx = S.habits.findIndex((x) => x.id === hId);
+                if (idx !== -1) S.habits.splice(idx, 1);
+                S.stacks = (S.stacks || [])
+                  .map((s) => ({
+                    ...s,
+                    habitIds: s.habitIds.filter((id) => id !== hId),
+                  }))
+                  .filter((s) => s.habitIds.length >= 2);
+                saveS();
+                renderCards();
+                renderStrip(false);
+                refreshProfileDisplay();
+              },
+            });
+          }
         });
       }
 
@@ -3510,6 +3811,94 @@
       });
 
       // ════════════════════════════════════════════════════════════
+      // STACK BUILDER
+      // ════════════════════════════════════════════════════════════
+      let stackSel = []; // ordered array of habitIds
+
+      function openStackBuilder() {
+        stackSel = [];
+        const body = document.getElementById("stack-body");
+        body.innerHTML = "";
+        const active = S.habits.filter((h) => h.enabled);
+
+        if (active.length < 2) {
+          body.innerHTML = `<p style="text-align:center;color:var(--tt);padding:20px 16px">Нужно минимум 2 активные привычки</p>`;
+          document.getElementById("stack-ovl").classList.add("on");
+          document.getElementById("stack-sheet").classList.add("on");
+          return;
+        }
+
+        active.forEach((h) => {
+          const row = document.createElement("div");
+          row.className = "stack-row";
+          row.dataset.id = h.id;
+          row.innerHTML = `<div class="stack-row-num" id="sn-${h.id}"></div><div class="stack-row-icon">${h.icon}</div><div class="stack-row-name">${esc(h.name)}</div>`;
+          row.addEventListener("click", () => {
+            const idx = stackSel.indexOf(h.id);
+            if (idx !== -1) {
+              stackSel.splice(idx, 1);
+              row.classList.remove("sel");
+            } else {
+              stackSel.push(h.id);
+              row.classList.add("sel");
+            }
+            updateStackNums();
+            document.getElementById("stack-confirm-btn").disabled =
+              stackSel.length < 2;
+          });
+          body.appendChild(row);
+        });
+
+        document.getElementById("stack-confirm-btn").disabled = true;
+        document.getElementById("stack-ovl").classList.add("on");
+        document.getElementById("stack-sheet").classList.add("on");
+      }
+
+      function updateStackNums() {
+        document.querySelectorAll(".stack-row").forEach((row) => {
+          const idx = stackSel.indexOf(row.dataset.id);
+          const el = row.querySelector(".stack-row-num");
+          if (idx !== -1) {
+            el.textContent = idx + 1;
+            el.classList.add("active");
+          } else {
+            el.textContent = "";
+            el.classList.remove("active");
+          }
+        });
+      }
+
+      function closeStackBuilder() {
+        document.getElementById("stack-ovl").classList.remove("on");
+        document.getElementById("stack-sheet").classList.remove("on");
+      }
+
+      document
+        .getElementById("stack-btn")
+        .addEventListener("click", openStackBuilder);
+      document
+        .getElementById("stack-ovl")
+        .addEventListener("click", closeStackBuilder);
+      document
+        .getElementById("stack-cancel-btn")
+        .addEventListener("click", closeStackBuilder);
+      document
+        .getElementById("stack-confirm-btn")
+        .addEventListener("click", () => {
+          if (stackSel.length < 2) return;
+          S.stacks = (S.stacks || []).filter(
+            (s) => !s.habitIds.some((id) => stackSel.includes(id)),
+          );
+          S.stacks.push({
+            id: "s" + Date.now().toString(36),
+            habitIds: [...stackSel],
+          });
+          saveS();
+          closeStackBuilder();
+          renderCards();
+        });
+
+      // ════════════════════════════════════════════════════════════
       // AI CHAT
       // ════════════════════════════════════════════════════════════
       // ── Вставь сюда URL своего Cloudflare Worker ──────────────────
@@ -3535,6 +3924,18 @@
           .filter((h) => !h.enabled)
           .map((h) => `${h.icon} ${h.name}`)
           .join("; ");
+        const stacksInfo = (S.stacks || [])
+          .map((st) =>
+            st.habitIds
+              .map((id) => {
+                const h = S.habits.find((x) => x.id === id);
+                return h ? `${h.icon} ${h.name}` : null;
+              })
+              .filter(Boolean)
+              .join(" → "),
+          )
+          .filter(Boolean)
+          .join("; ");
         const xp = calcTotalXP();
         const ri = getRankIdx(xp);
         const streak = calcStreak();
@@ -3552,39 +3953,38 @@
 Данные пользователя:
 Активные привычки: ${habits || "пока нет"}
 Отключённые привычки: ${disabled || "нет"}
+Связанные стеки: ${stacksInfo || "нет"}
 XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
 Серия дней: ${streak}
 
-Отвечай на русском языке. Давай конкретные, практичные советы. Отвечай лаконично (3–5 предложений). В конце КАЖДОГО ответа добавь ровно три коротких предложения-предложения в формате:
+Отвечай на русском языке. Давай конкретные, практичные советы. Отвечай лаконично (3–5 предложений).
+В конце КАЖДОГО ответа добавь ровно три коротких вопроса или предложения, которые пользователь захочет спросить следующим, в формате:
 СОВЕТЫ:
-• [текст]
-• [текст]
-• [текст]
+• [вопрос или предложение от лица пользователя]
+• [вопрос или предложение от лица пользователя]
+• [вопрос или предложение от лица пользователя]
 
-Если считаешь нужным предложить конкретное изменение в привычках пользователя, добавь ПОСЛЕ блока СОВЕТЫ одну строку в точном формате:
+Если считаешь нужным, предложи одно конкретное изменение в привычках. Добавь ПОСЛЕ блока СОВЕТЫ строку в ТОЧНОМ формате (одну из трёх):
 ДЕЙСТВИЕ: ADD | [один эмодзи] | [Название новой привычки]
-или
-ДЕЙСТВИЕ: ENABLE | [Точное название отключённой привычки из списка выше]
-Добавляй ДЕЙСТВИЕ только когда уверен в пользе. Максимум одно ДЕЙСТВИЕ за ответ. Не дублируй уже активные привычки.`;
+ДЕЙСТВИЕ: ENABLE | [Точное название отключённой привычки]
+ДЕЙСТВИЕ: STACK | [Название привычки 1] | [Название привычки 2]
+Правила: только одно ДЕЙСТВИЕ за ответ; не дублируй активные привычки; STACK предлагай когда 2 привычки логично идут одна за другой.`;
       }
 
       function parseSuggestions(text) {
         let action = null;
-        const actMatch = text.match(
-          /ДЕЙСТВИЕ:\s*(ADD|ENABLE)\s*\|\s*(.+?)(?:\s*\|\s*(.+?))?\s*$/im,
-        );
-        if (actMatch) {
-          const type = actMatch[1].toUpperCase();
-          if (type === "ADD" && actMatch[3]) {
-            action = {
-              type: "ADD",
-              icon: actMatch[2].trim(),
-              name: actMatch[3].trim(),
-            };
-          } else if (type === "ENABLE" && actMatch[2]) {
-            action = { type: "ENABLE", name: actMatch[2].trim() };
+        const actLine = text.match(/^ДЕЙСТВИЕ:\s*(.+)$/im);
+        if (actLine) {
+          const parts = actLine[1].split("|").map((s) => s.trim());
+          const type = parts[0].toUpperCase();
+          if (type === "ADD" && parts.length >= 3) {
+            action = { type: "ADD", icon: parts[1], name: parts[2] };
+          } else if (type === "ENABLE" && parts.length >= 2) {
+            action = { type: "ENABLE", name: parts[1] };
+          } else if (type === "STACK" && parts.length >= 3) {
+            action = { type: "STACK", names: parts.slice(1) };
           }
-          text = text.slice(0, text.search(/ДЕЙСТВИЕ:/im)).trim();
+          text = text.slice(0, actLine.index).trim();
         }
         const match = text.match(/СОВЕТЫ:\s*([\s\S]*?)$/i);
         if (!match) return { clean: text, tips: [], action };
@@ -3637,6 +4037,63 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
         const msgs = document.getElementById("chat-msgs");
         if (!msgs) return;
 
+        const dismiss = (card, msg) => {
+          card.querySelector(".chat-action-btns").innerHTML =
+            `<div class="chat-action-done" style="color:var(--tt)">${msg}</div>`;
+        };
+
+        // ── STACK ──
+        if (action.type === "STACK") {
+          const matched = (action.names || [])
+            .map((n) =>
+              S.habits.find(
+                (h) =>
+                  h.enabled && h.name.toLowerCase().includes(n.toLowerCase()),
+              ),
+            )
+            .filter(Boolean);
+          if (matched.length < 2) return;
+
+          const preview = matched
+            .map(
+              (h, i) =>
+                (i > 0 ? `<div class="chat-stack-arrow">↓ затем</div>` : "") +
+                `<div class="chat-stack-habit">${h.icon} ${esc(h.name)}</div>`,
+            )
+            .join("");
+
+          const card = document.createElement("div");
+          card.className = "chat-action-card";
+          card.innerHTML = `<div class="chat-action-label" style="margin-bottom:6px">Тренер предлагает связать в стек</div><div class="chat-stack-preview">${preview}</div><div class="chat-action-btns"><button class="chat-action-accept">🔗 Связать</button><button class="chat-action-decline">Не сейчас</button></div>`;
+
+          card
+            .querySelector(".chat-action-accept")
+            .addEventListener("click", () => {
+              const ids = matched.map((h) => h.id);
+              S.stacks = (S.stacks || []).filter(
+                (s) => !s.habitIds.some((id) => ids.includes(id)),
+              );
+              S.stacks.push({
+                id: "s" + Date.now().toString(36),
+                habitIds: ids,
+              });
+              saveS();
+              renderCards();
+              card.querySelector(".chat-action-btns").innerHTML =
+                `<div class="chat-action-done" style="color:#34c759">✓ Привычки связаны!</div>`;
+            });
+          card
+            .querySelector(".chat-action-decline")
+            .addEventListener("click", () =>
+              dismiss(card, "Хорошо, в другой раз"),
+            );
+
+          msgs.appendChild(card);
+          msgs.scrollTop = msgs.scrollHeight;
+          return;
+        }
+
+        // ── ADD / ENABLE ──
         let icon = action.icon || "⭐";
         let name = action.name || "";
         let targetHabit = null;
@@ -3660,18 +4117,7 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
 
         const card = document.createElement("div");
         card.className = "chat-action-card";
-        card.innerHTML = `
-          <div class="chat-action-header">
-            <div class="chat-action-emoji">${icon}</div>
-            <div class="chat-action-meta">
-              <div class="chat-action-label">${label}</div>
-              <div class="chat-action-name">${esc(name)}</div>
-            </div>
-          </div>
-          <div class="chat-action-btns">
-            <button class="chat-action-accept">${btnText}</button>
-            <button class="chat-action-decline">Не сейчас</button>
-          </div>`;
+        card.innerHTML = `<div class="chat-action-header"><div class="chat-action-emoji">${icon}</div><div class="chat-action-meta"><div class="chat-action-label">${label}</div><div class="chat-action-name">${esc(name)}</div></div></div><div class="chat-action-btns"><button class="chat-action-accept">${btnText}</button><button class="chat-action-decline">Не сейчас</button></div>`;
 
         card
           .querySelector(".chat-action-accept")
@@ -3694,15 +4140,13 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
             renderStrip(false);
             refreshProfileDisplay();
             card.querySelector(".chat-action-btns").innerHTML =
-              `<div class="chat-action-done" style="color:#34c759">✓ Привычка добавлена!</div>`;
+              `<div class="chat-action-done" style="color:#34c759">✓ Готово!</div>`;
           });
-
         card
           .querySelector(".chat-action-decline")
-          .addEventListener("click", () => {
-            card.querySelector(".chat-action-btns").innerHTML =
-              `<div class="chat-action-done" style="color:var(--tt)">Хорошо, в другой раз</div>`;
-          });
+          .addEventListener("click", () =>
+            dismiss(card, "Хорошо, в другой раз"),
+          );
 
         msgs.appendChild(card);
         msgs.scrollTop = msgs.scrollHeight;
@@ -3758,11 +4202,18 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
           appendBubble("ai", clean);
           if (action) appendActionCard(action);
 
-          const defaultTips = [
-            "Как не сорваться на привычке?",
-            "Расскажи про правило 2 минут",
-            "Как стекировать привычки?",
-          ];
+          const defaultTips =
+            S.habits.filter((h) => h.enabled).length >= 2
+              ? [
+                  "Свяжи мои привычки в стек",
+                  "Как не сорваться на привычке?",
+                  "Предложи мне новую привычку",
+                ]
+              : [
+                  "С чего начать формирование привычек?",
+                  "Расскажи про правило 2 минут",
+                  "Как сделать привычку очевидной?",
+                ];
           setChips(tips.length ? tips : defaultTips);
         } catch (e) {
           if (typing) typing.remove();
