@@ -3414,7 +3414,7 @@
       // ════════════════════════════════════════════════════════════
       // ── Вставь сюда URL своего Cloudflare Worker ──────────────────
       const WORKER_URL =
-        "https://fitbylogic-ai.mihail-kazachinsckij.workers.dev";
+        "https://fitbylogic-ai.mihail-kazachinsckij.workers.dev/";
       // ──────────────────────────────────────────────────────────────
 
       const AI_MODEL = "claude-haiku-4-5-20251001";
@@ -3536,8 +3536,12 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
 
           if (!resp.ok) {
             const err = await resp.json().catch(() => ({}));
-            const msg = err?.error?.message || `Ошибка ${resp.status}`;
-            appendBubble("ai", `⚠️ ${msg}`);
+            const errText =
+              err?.error?.message ||
+              err?.error ||
+              err?.message ||
+              `Ошибка ${resp.status}`;
+            appendBubble("ai", `⚠️ ${errText} (код ${resp.status})`);
             chatBusy = false;
             if (btn) btn.disabled = false;
             return;
