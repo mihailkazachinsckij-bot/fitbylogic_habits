@@ -41,7 +41,7 @@
 
   <!-- ─── Progress ring ─── -->
   <!-- Track (dim white) -->
-  <circle cx="256" cy="234" r="118"
+  <circle cx="256" cy="212" r="118"
     fill="none"
     stroke="rgba(255,255,255,0.08)"
     stroke-width="17"/>
@@ -50,25 +50,24 @@
   <!-- circumference = 2π×118 ≈ 741.4 -->
   <!-- dashoffset for ~80% fill = 741.4 × 0.195 ≈ 144.6  (gap = ~20%) -->
   <!-- Rotate so gap sits in bottom-right -->
-  <circle cx="256" cy="234" r="118"
+  <circle cx="256" cy="212" r="118"
     fill="none"
     stroke="url(#arcGrad)"
     stroke-width="17"
     stroke-linecap="round"
     stroke-dasharray="741.4"
     stroke-dashoffset="144.6"
-    transform="rotate(-90 256 234)"
+    transform="rotate(-90 256 212)"
     filter="url(#arcGlow)"/>
 
   <!-- Bright dot at arc end (achievement spark) -->
-  <!-- End point of arc at ~290° from top = 200° from +x axis -->
-  <!-- x = 256 + 118×cos(200°) ≈ 256 - 110.9 ≈ 145 -->
-  <!-- y = 234 + 118×sin(200°) ≈ 234 - 40.4 ≈ 193.6 -->
-  <circle cx="145" cy="194" r="9" fill="#34aaff" opacity="0.9"/>
-  <circle cx="145" cy="194" r="5" fill="white"/>
+  <!-- x = 256 + 118×cos(200°) ≈ 145 -->
+  <!-- y = 212 + 118×sin(200°) ≈ 212 - 40.4 ≈ 172 -->
+  <circle cx="145" cy="172" r="9" fill="#34aaff" opacity="0.9"/>
+  <circle cx="145" cy="172" r="5" fill="white"/>
 
   <!-- ─── Checkmark ─── -->
-  <path d="M193 232 l45 45 88 -90"
+  <path d="M193 210 l45 45 88 -90"
     fill="none"
     stroke="white"
     stroke-width="24"
