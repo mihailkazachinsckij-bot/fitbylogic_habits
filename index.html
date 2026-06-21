@@ -23,12 +23,18 @@
         -webkit-tap-highlight-color: transparent;
       }
       :root {
-        --bg: #f2f2f7;
-        --glass: rgba(255, 255, 255, 0.72);
-        --divider: rgba(0, 0, 0, 0.07);
-        --tp: #1d1d1f;
-        --ts: #6e6e73;
-        --tt: #aeaeb2;
+        --bg: #f6f3ee;
+        --card: #fcfaf6;
+        --glass: rgba(252, 250, 246, 0.72);
+        --divider: rgba(33, 28, 22, 0.08);
+        --hairline: rgba(33, 28, 22, 0.10);
+        --tp: #211c16;
+        --ts: #6e665c;
+        --tt: #a39a8b;
+        --accent: #be9b4f;        /* ЗАМЕНИТЬ на точный hex золота из fitbylogic_design_v2.md */
+        --accent-rgb: 190, 155, 79;
+        --accent-soft: rgba(190, 155, 79, 0.12);
+        --font-display: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
         --r20: 20px;
         --r16: 16px;
         --r13: 13px;
@@ -36,12 +42,17 @@
         --st: env(safe-area-inset-top, 44px);
       }
       [data-theme="dark"] {
-        --bg: #1c1c1e;
-        --glass: rgba(44, 44, 46, 0.88);
-        --divider: rgba(255, 255, 255, 0.1);
-        --tp: #f5f5f7;
-        --ts: #aeaeb2;
-        --tt: #636366;
+        --bg: #17150f;
+        --card: #211e17;
+        --glass: rgba(33, 30, 23, 0.82);
+        --divider: rgba(242, 238, 230, 0.10);
+        --hairline: rgba(242, 238, 230, 0.12);
+        --tp: #f2eee6;
+        --ts: #a39a8b;
+        --tt: #6e665c;
+        --accent: #d4b25e;
+        --accent-rgb: 212, 178, 94;
+        --accent-soft: rgba(212, 178, 94, 0.16);
       }
       html,
       body {
@@ -127,8 +138,8 @@
         gap: 10px;
         flex-shrink: 0;
         background: rgba(242, 242, 247, 0.9);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         border-top: 0.5px solid var(--divider);
       }
       [data-theme="dark"] .ob-foot {
@@ -139,8 +150,8 @@
         border-radius: var(--r13);
         border: 0.5px solid rgba(255, 255, 255, 0.9);
         background: var(--glass);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         box-shadow:
           0 2px 10px rgba(0, 0, 0, 0.05),
           inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -185,10 +196,8 @@
         gap: 7px;
         padding: 18px 10px;
         border-radius: var(--r16);
-        background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
-        border: 0.5px solid rgba(255, 255, 255, 0.92);
+        background: var(--card);
+        border: 0.5px solid var(--hairline);
         box-shadow:
           0 2px 10px rgba(0, 0, 0, 0.05),
           inset 0 1px 0 rgba(255, 255, 255, 0.95);
@@ -259,10 +268,8 @@
       .dur-row {
         padding: 14px 16px;
         border-radius: var(--r16);
-        background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
-        border: 0.5px solid rgba(255, 255, 255, 0.92);
+        background: var(--card);
+        border: 0.5px solid var(--hairline);
         box-shadow:
           0 2px 10px rgba(0, 0, 0, 0.05),
           inset 0 1px 0 rgba(255, 255, 255, 0.95);
@@ -354,8 +361,8 @@
         border-radius: 50%;
         border: 0.5px solid rgba(255, 255, 255, 0.85);
         background: rgba(255, 255, 255, 0.68);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         box-shadow:
           0 2px 8px rgba(0, 0, 0, 0.07),
           inset 0 1px 0 rgba(255, 255, 255, 0.95);
@@ -539,10 +546,8 @@
         align-items: center;
         gap: 14px;
         padding: 15px 16px 13px;
-        background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
-        border: 0.5px solid rgba(255, 255, 255, 0.92);
+        background: var(--card);
+        border: 0.5px solid var(--hairline);
         cursor: pointer;
         will-change: transform;
         transition:
@@ -553,10 +558,10 @@
         border-color: rgba(255, 255, 255, 0.12);
       }
       .hcard.done {
-        background: rgba(240, 240, 244, 0.55);
+        background: rgba(246, 243, 238, 0.6);
       }
       [data-theme="dark"] .hcard.done {
-        background: rgba(28, 28, 30, 0.65);
+        background: rgba(33, 30, 23, 0.6);
       }
 
       .hc-icon {
@@ -654,8 +659,8 @@
         justify-content: space-around;
         padding: 6px 8px;
         background: rgba(255, 255, 255, 0.68);
-        backdrop-filter: saturate(200%) blur(32px);
-        -webkit-backdrop-filter: saturate(200%) blur(32px);
+        backdrop-filter: saturate(150%) blur(14px);
+        -webkit-backdrop-filter: saturate(150%) blur(14px);
         border-radius: 24px;
         border: 0.5px solid rgba(255, 255, 255, 0.92);
         box-shadow:
@@ -768,10 +773,8 @@
       }
       .pcard {
         border-radius: var(--r16);
-        background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
-        border: 0.5px solid rgba(255, 255, 255, 0.92);
+        background: var(--card);
+        border: 0.5px solid var(--hairline);
         box-shadow:
           0 2px 12px rgba(0, 0, 0, 0.05),
           inset 0 1px 0 rgba(255, 255, 255, 0.95);
@@ -852,10 +855,8 @@
       .stat-card {
         padding: 16px 14px;
         border-radius: var(--r16);
-        background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
-        border: 0.5px solid rgba(255, 255, 255, 0.92);
+        background: var(--card);
+        border: 0.5px solid var(--hairline);
         box-shadow:
           0 2px 10px rgba(0, 0, 0, 0.05),
           inset 0 1px 0 rgba(255, 255, 255, 0.95);
@@ -899,8 +900,8 @@
         width: 100%;
         max-width: 430px;
         background: rgba(242, 242, 247, 0.96);
-        backdrop-filter: saturate(180%) blur(30px);
-        -webkit-backdrop-filter: saturate(180%) blur(30px);
+        backdrop-filter: saturate(150%) blur(18px);
+        -webkit-backdrop-filter: saturate(150%) blur(18px);
         border-radius: 24px 24px 0 0;
         border-top: 0.5px solid rgba(255, 255, 255, 0.9);
         box-shadow: 0 -2px 40px rgba(0, 0, 0, 0.12);
@@ -1130,8 +1131,8 @@
         border-radius: var(--r13);
         border: 0.5px solid rgba(255, 255, 255, 0.9);
         background: var(--glass);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         font-size: 15px;
         font-family: inherit;
         font-weight: 500;
@@ -1256,8 +1257,8 @@
         width: 100%;
         max-width: 430px;
         background: rgba(242, 242, 247, 0.96);
-        backdrop-filter: saturate(180%) blur(30px);
-        -webkit-backdrop-filter: saturate(180%) blur(30px);
+        backdrop-filter: saturate(150%) blur(18px);
+        -webkit-backdrop-filter: saturate(150%) blur(18px);
         border-radius: 24px 24px 0 0;
         border-top: 0.5px solid rgba(255, 255, 255, 0.9);
         box-shadow: 0 -2px 40px rgba(0, 0, 0, 0.15);
@@ -1318,8 +1319,8 @@
         border-radius: var(--r13);
         border: 0.5px solid rgba(255, 255, 255, 0.9);
         background: var(--glass);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         font-size: 16px;
         font-family: inherit;
         font-weight: 500;
@@ -1392,8 +1393,8 @@
         height: 88px;
         border-radius: 50%;
         background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        backdrop-filter: saturate(140%) blur(14px);
+        -webkit-backdrop-filter: saturate(140%) blur(14px);
         border: 2.5px solid var(--rank-color, var(--tp));
         display: flex;
         align-items: center;
@@ -1581,8 +1582,8 @@
         margin: 12px 16px 0;
         padding: 16px;
         background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        backdrop-filter: saturate(140%) blur(14px);
+        -webkit-backdrop-filter: saturate(140%) blur(14px);
         border: 0.5px solid rgba(255, 255, 255, 0.85);
         border-radius: var(--r20);
         box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
@@ -1620,7 +1621,7 @@
         background: rgba(52, 199, 89, 0.14);
       }
       .xp-tip-ico.b {
-        background: rgba(0, 122, 255, 0.12);
+        background: rgba(var(--accent-rgb), 0.12);
       }
       .xp-tip-body {
         flex: 1;
@@ -1665,13 +1666,13 @@
         width: 80px;
         height: 80px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
+        background: linear-gradient(135deg, var(--accent) 0%, #5856d6 100%);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 38px;
         margin-bottom: 4px;
-        box-shadow: 0 6px 24px rgba(0, 122, 255, 0.3);
+        box-shadow: 0 6px 24px rgba(var(--accent-rgb), 0.3);
       }
       .chat-setup-title {
         font-size: 20px;
@@ -1703,14 +1704,14 @@
         border-color: rgba(255, 255, 255, 0.12);
       }
       .chat-key-input:focus {
-        border-color: #007aff;
+        border-color: var(--accent);
       }
       .chat-connect-btn {
         width: 100%;
         padding: 14px;
         border-radius: var(--r13);
         border: none;
-        background: #007aff;
+        background: var(--accent);
         color: #fff;
         font-size: 16px;
         font-weight: 600;
@@ -1727,7 +1728,7 @@
         line-height: 1.5;
       }
       .chat-key-hint a {
-        color: #007aff;
+        color: var(--accent);
         text-decoration: none;
       }
 
@@ -1759,7 +1760,7 @@
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
+        background: linear-gradient(135deg, var(--accent) 0%, #5856d6 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1774,8 +1775,8 @@
         line-height: 1.5;
         color: var(--tp);
         background: var(--glass);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 0.5px solid rgba(255, 255, 255, 0.85);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
         word-break: break-word;
@@ -1787,11 +1788,11 @@
         border-bottom-left-radius: 4px;
       }
       .chat-bubble-wrap.user .chat-bubble {
-        background: #007aff;
+        background: var(--accent);
         color: #fff;
         border: none;
         border-bottom-right-radius: 4px;
-        box-shadow: 0 2px 12px rgba(0, 122, 255, 0.3);
+        box-shadow: 0 2px 12px rgba(var(--accent-rgb), 0.3);
       }
       .typing-dots {
         display: flex;
@@ -1836,11 +1837,11 @@
       .chip {
         padding: 8px 14px;
         border-radius: 20px;
-        border: 1px solid rgba(0, 122, 255, 0.35);
-        background: rgba(0, 122, 255, 0.07);
+        border: 1px solid rgba(var(--accent-rgb), 0.35);
+        background: rgba(var(--accent-rgb), 0.07);
         font-size: 13px;
         font-weight: 500;
-        color: #007aff;
+        color: var(--accent);
         cursor: pointer;
         transition:
           background 0.15s,
@@ -1848,12 +1849,12 @@
         -webkit-tap-highlight-color: transparent;
       }
       .chip:active {
-        background: rgba(0, 122, 255, 0.15);
+        background: rgba(var(--accent-rgb), 0.15);
         transform: scale(0.97);
       }
       [data-theme="dark"] .chip {
-        border-color: rgba(0, 122, 255, 0.4);
-        background: rgba(0, 122, 255, 0.12);
+        border-color: rgba(var(--accent-rgb), 0.4);
+        background: rgba(var(--accent-rgb), 0.12);
       }
 
       /* input bar */
@@ -1864,8 +1865,8 @@
         padding: 10px 16px calc(10px + var(--sb));
         border-top: 0.5px solid var(--divider);
         background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        backdrop-filter: saturate(140%) blur(14px);
+        -webkit-backdrop-filter: saturate(140%) blur(14px);
         flex-shrink: 0;
       }
       .chat-textarea {
@@ -1891,14 +1892,14 @@
         border-color: rgba(255, 255, 255, 0.12);
       }
       .chat-textarea:focus {
-        border-color: #007aff;
+        border-color: var(--accent);
       }
       .chat-send-btn {
         width: 36px;
         height: 36px;
         border-radius: 50%;
         border: none;
-        background: #007aff;
+        background: var(--accent);
         color: #fff;
         display: flex;
         align-items: center;
@@ -1934,10 +1935,10 @@
         margin: -4px 16px 4px 52px;
         background: linear-gradient(
           135deg,
-          rgba(0, 122, 255, 0.07) 0%,
+          rgba(var(--accent-rgb), 0.07) 0%,
           rgba(88, 86, 214, 0.05) 100%
         );
-        border: 0.5px solid rgba(0, 122, 255, 0.22);
+        border: 0.5px solid rgba(var(--accent-rgb), 0.22);
         border-radius: 16px;
         padding: 13px 14px;
         display: flex;
@@ -1948,10 +1949,10 @@
       [data-theme="dark"] .chat-action-card {
         background: linear-gradient(
           135deg,
-          rgba(0, 122, 255, 0.12) 0%,
+          rgba(var(--accent-rgb), 0.12) 0%,
           rgba(88, 86, 214, 0.09) 100%
         );
-        border-color: rgba(0, 122, 255, 0.3);
+        border-color: rgba(var(--accent-rgb), 0.3);
       }
       .chat-action-header {
         display: flex;
@@ -1973,7 +1974,7 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        color: #007aff;
+        color: var(--accent);
       }
       .chat-action-name {
         font-size: 14px;
@@ -1989,7 +1990,7 @@
         padding: 9px 10px;
         border-radius: 11px;
         border: none;
-        background: #007aff;
+        background: var(--accent);
         color: #fff;
         font-size: 13.5px;
         font-weight: 600;
@@ -2032,21 +2033,21 @@
       /* ─── STACK GROUPS (habit stacking) ─── */
       .stack-group {
         background: var(--glass);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        backdrop-filter: saturate(140%) blur(14px);
+        -webkit-backdrop-filter: saturate(140%) blur(14px);
         border-radius: 20px;
-        border: 0.5px solid rgba(0, 122, 255, 0.18);
+        border: 0.5px solid rgba(var(--accent-rgb), 0.18);
         padding: 12px 10px 10px;
         display: flex;
         flex-direction: column;
         gap: 0;
         animation: fadeUp 0.3s ease both;
         box-shadow:
-          0 2px 18px rgba(0, 122, 255, 0.07),
+          0 2px 18px rgba(var(--accent-rgb), 0.07),
           0 1px 4px rgba(0, 0, 0, 0.04);
       }
       [data-theme="dark"] .stack-group {
-        border-color: rgba(0, 122, 255, 0.28);
+        border-color: rgba(var(--accent-rgb), 0.28);
       }
       .stack-hdr {
         display: flex;
@@ -2062,7 +2063,7 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.6px;
-        color: #007aff;
+        color: var(--accent);
       }
       .stack-remove-btn {
         width: 22px;
@@ -2103,15 +2104,15 @@
         height: 18px;
         background: linear-gradient(
           to bottom,
-          rgba(0, 122, 255, 0.45),
-          rgba(0, 122, 255, 0.1)
+          rgba(var(--accent-rgb), 0.45),
+          rgba(var(--accent-rgb), 0.1)
         );
         border-radius: 2px;
         flex-shrink: 0;
       }
       .stack-conn-label {
         font-size: 11px;
-        color: #007aff;
+        color: var(--accent);
         font-weight: 500;
         opacity: 0.75;
       }
@@ -2131,10 +2132,10 @@
         background: rgba(0, 0, 0, 0.04);
       }
       .stack-row.sel {
-        background: rgba(0, 122, 255, 0.06);
+        background: rgba(var(--accent-rgb), 0.06);
       }
       [data-theme="dark"] .stack-row.sel {
-        background: rgba(0, 122, 255, 0.1);
+        background: rgba(var(--accent-rgb), 0.1);
       }
       .stack-row-num {
         width: 24px;
@@ -2154,8 +2155,8 @@
         flex-shrink: 0;
       }
       .stack-row-num.active {
-        border-color: #007aff;
-        background: #007aff;
+        border-color: var(--accent);
+        background: var(--accent);
         color: #fff;
       }
       .stack-row-icon {
@@ -2190,11 +2191,26 @@
       }
       .chat-stack-arrow {
         font-size: 11px;
-        color: #007aff;
+        color: var(--accent);
         font-weight: 500;
         padding: 1px 0 1px 4px;
       }
+      /* ── Брендовый дисплейный шрифт (Montserrat) ── */
+      .ob-title,
+      .app-name,
+      .stat-val,
+      .sh-title,
+      .m-title,
+      .path-sect-title,
+      .rank-title,
+      .rank-xp-display,
+      .path-node-name {
+        font-family: var(--font-display);
+      }
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <!-- ══ ONBOARDING ══ -->
@@ -2644,8 +2660,8 @@
           xp: 5000,
           icon: "🦅",
           name: "Чемпион",
-          color: "#007aff",
-          glow: "rgba(0,122,255,0.28)",
+          color: "var(--accent)",
+          glow: "rgba(var(--accent-rgb),0.28)",
         },
         {
           xp: 6800,
@@ -4080,7 +4096,7 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
               saveS();
               renderCards();
               card.querySelector(".chat-action-btns").innerHTML =
-                `<div class="chat-action-done" style="color:#34c759">✓ Привычки связаны!</div>`;
+                `<div class="chat-action-done" style="color:var(--accent)">✓ Привычки связаны!</div>`;
             });
           card
             .querySelector(".chat-action-decline")
@@ -4140,7 +4156,7 @@ XP: ${xp} (ранг: ${RANKS[ri].name} ${RANKS[ri].icon})
             renderStrip(false);
             refreshProfileDisplay();
             card.querySelector(".chat-action-btns").innerHTML =
-              `<div class="chat-action-done" style="color:#34c759">✓ Готово!</div>`;
+              `<div class="chat-action-done" style="color:var(--accent)">✓ Готово!</div>`;
           });
         card
           .querySelector(".chat-action-decline")
